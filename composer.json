@@ -2,7 +2,7 @@
     "name": "mplaying/oauth2-mplaying",
     "description": "MPlaying Reallife OAuth2 Provider implementation for thephpleague/oauth2-client",
     "type": "library",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "require": {
         "php": ">=5.4.0",
         "league/oauth2-client": "^2.2"

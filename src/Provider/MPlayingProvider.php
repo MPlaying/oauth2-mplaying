@@ -13,11 +13,12 @@ namespace MPlaying\OAuth2\MPlaying\Provider;
 
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 use Psr\Http\Message\ResponseInterface;
 
-class MPlayingProvider extends AbstractProvider
+class MPlayingProvider extends GenericProvider
 {
 
     /**
@@ -57,35 +58,43 @@ class MPlayingProvider extends AbstractProvider
     }
 
     /**
-     * Returns the default scopes used by this provider.
-     *
-     * This should only be the scopes that are required to request the details
-     * of the resource owner, rather than all the available scopes.
-     *
-     * @return array
+     * @inheritdoc
      */
-    protected function getDefaultScopes()
+    protected function getScopeSeparator()
     {
-        return ["user_public", "user_email"];
+        return " ";
     }
 
     /**
-     * Checks a provider response for errors.
-     *
-     * @throws IdentityProviderException
-     * @param  ResponseInterface $response
-     * @param  array|string $data Parsed response data
-     * @return void
+     * @inheritdoc
      */
-    protected function checkResponse(ResponseInterface $response, $data)
+    protected function getAccessTokenMethod()
     {
-        if($response->getStatusCode() >= 400) {
-            throw new IdentityProviderException(
-                $data['message'],
-                $response->getStatusCode(),
-                $response
-            );
-        }
+        return self::METHOD_POST;
+    }
+
+    /**
+     * Returns all options that are required.
+     *
+     * @return array
+     */
+    protected function getRequiredOptions()
+    {
+        return [];
+    }
+
+    /**
+     * Returns all options that can be configured.
+     *
+     * @return array
+     */
+    protected function getConfigurableOptions()
+    {
+        return array_merge($this->getRequiredOptions(), [
+            'responseError',
+            'responseCode',
+            'scopes',
+        ]);
     }
 
     /**
