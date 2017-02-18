@@ -1,0 +1,16 @@
+{
+    "name": "mplaying/oauth2-mplaying",
+    "description": "MPlaying Reallife OAuth2 Provider implementation for thephpleague/oauth2-client",
+    "type": "library",
+    "version": "0.0.1",
+    "require": {
+        "league/oauth2-client": "^2.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Francesco Paolocci",
+            "email": "f.paolocci@gmx.de"
+        }
+    ]
+}
