@@ -11,15 +11,17 @@
 namespace MPlaying\OAuth2\MPlaying\Provider;
 
 
-use League\OAuth2\Client\Provider\AbstractProvider;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
-use Psr\Http\Message\ResponseInterface;
 
 class MPlayingProvider extends GenericProvider
 {
+
+    private $apiUrl = "https://cp.mplaying.eu/api/v1";
 
     /**
      * Returns the base URL for authorizing a client.
@@ -108,5 +110,22 @@ class MPlayingProvider extends GenericProvider
     protected function createResourceOwner(array $response, AccessToken $token)
     {
         return new MPlayingResourceOwner($response);
+    }
+
+    /**
+     * @param $method
+     * @param $endpoint
+     * @param AccessToken $accessToken
+     * @throws IdentityProviderException
+     * @return mixed
+     */
+    public function getEndpointData($method, $endpoint, AccessToken $accessToken) {
+        $request = $this->getAuthenticatedRequest(
+            $method,
+            $this->apiUrl.$endpoint,
+            $accessToken
+        );
+
+        return $this->getParsedResponse($request);
     }
 }
