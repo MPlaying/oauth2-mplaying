@@ -15,7 +15,9 @@
             "role": "Developer"
         }
     ],
-    "psr-4": {
-        "MPlaying\\OAuth2\\MPlaying\\": "src/"
+    "autoload": {
+        "psr-4": {
+            "MPlaying\\OAuth2\\MPlaying\\": "src/"
+        }
     }
 }
